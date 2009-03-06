@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  xmlns:xbug="http://xbug.sourceforge.net/"
+  targetNamespace="http://xbug.sourceforge.net/"
+  xml:lang="en"
+  >
+
+  <annotation>
+    <documentation>Should later be used to validate http://xbug.svn.sourceforge.net/viewvc/xbug/bugs.xml</documentation>
+  </annotation>
+
+</schema>
