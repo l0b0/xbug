@@ -130,13 +130,15 @@ This is /not/ ready for use yet! In fact, it's probably not even valid.
 	</xhtml:head>
 	<xhtml:body>
 
-		<xhtml:div id="contents">
+		<xhtml:div xml:id="contents">
+		
+			<xhtml:h1>Bugs</xhtml:h1>
 
-			<xf:group id="bugs-group">
-				<xf:label>Bug</xf:label>
+			<xf:group>
+				<xf:label><xhtml:h2>File new bug</xhtml:h2></xf:label>
 	
 				<!-- Bug input -->
-				<xf:input id="bug-summary-input" bind="context-bug-summary-bind" accesskey="S">
+				<xf:input bind="context-bug-summary-bind" accesskey="S">
 					<xf:label>Summary</xf:label>
 	
 					<xf:help>Enter the summary of the bug.</xf:help>
@@ -145,7 +147,7 @@ This is /not/ ready for use yet! In fact, it's probably not even valid.
 				</xf:input>
 	
 				<!-- When selecting a Job, set the context -->
-				<xf:select1 id="bug-status-input" bind="context-bug-status-bind">
+				<xf:select1 bind="context-bug-status-bind">
 					<xf:label>Status</xf:label>
 					<xf:itemset bind="statuses-bind">
 						<xf:label ref="value"/>
@@ -159,6 +161,27 @@ This is /not/ ready for use yet! In fact, it's probably not even valid.
 					<xf:alert>Invalid value.</xf:alert>
 				</xf:input>
 	
+			</xf:group>
+			
+			<xf:group>
+				<xf:label><xhtml:h2>Log</xhtml:h2></xf:label>
+				<xf:repeat nodeset="instance('bugsFile')//xbug:bug">
+					<xf:output ref="xbug:summary">
+						<xf:label><xhtml:h3>Summary</xhtml:h3></xf:label>
+					</xf:output>
+					<xf:output ref="xbug:description">
+						<xf:label><xhtml:p>Description</xhtml:p></xf:label>
+					</xf:output>
+					<xf:output ref="xbug:status">
+						<xf:label>Status</xf:label>
+					</xf:output>
+					<xf:output ref="xbug:resolution">
+						<xf:label>Resolution</xf:label>
+					</xf:output>
+					<xf:output ref="xbug:reporter">
+						<xf:label>Reporter</xf:label>
+					</xf:output>
+				</xf:repeat>
 			</xf:group>
 		</xhtml:div>
 
