@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 $Id$
-This is /not/ ready for use yet!
 -->
 <html
 		xmlns="http://www.w3.org/1999/xhtml"
@@ -23,6 +22,12 @@ This is /not/ ready for use yet!
 			}
 			#bugs-repeat p xf|label {
 				display: block;
+			}
+			:focus {
+				background-color: #FF6;
+			}
+			#id-tag {
+				color: #AAA;
 			}
 		</style>
 
@@ -124,7 +129,7 @@ This is /not/ ready for use yet!
 	</head>
 	<body>
 
-		<div xml:id="contents">
+		<div id="contents">
 
 			<xf:group id="bugs">
 				<xf:label><h1>Bugs</h1></xf:label>
@@ -182,7 +187,7 @@ This is /not/ ready for use yet!
 								<xf:label ref="value"/>
 								<xf:value ref="value"/>
 							</xf:itemset>
-							<xf:alert>The status does not exist!</xf:alert>
+							<xf:alert>The resolution does not exist!</xf:alert>
 						</xf:select1>
 					</p>
 					<p>
@@ -196,7 +201,9 @@ This is /not/ ready for use yet!
 
 		<div id="footer">
 			<p><a href="http://xbug.sourceforge.net/" title="Bug tracking, downloads, updates, etc.">xbug homepage</a></p>
-			<p><a rel="license" href="http://www.gnu.org/licenses/gpl.html">GNU <abbr title="General Public License">GPL</abbr> licensed</a></p>
+			<p>Copyright © 2009 Victor Engmark</p>
+			<p>License: <a rel="license" href="http://www.gnu.org/licenses/gpl.html">GNU <abbr title="General Public License">GPL</abbr> v3 or newer</a></p>
+			<p id="id-tag">$Id$</p>
 		</div>
 
 	</body>
