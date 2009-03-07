@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
 <bugs xmlns="http://xbug.sourceforge.net/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xbug.svn.sourceforge.net/viewvc/xbug/bugs.xsd">
 	<bug xml:id="0">
 		<summary>My first bug</summary>
 		<description>A longer description of the bug</description>
 		<status>Unconfirmed</status>
-		<resolution>N/A</resolution>
+		<resolution>None</resolution>
 		<reporter>me</reporter>
 	</bug>
 </bugs>

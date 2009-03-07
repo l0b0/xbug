@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 $Id$
-This is /not/ ready for use yet! In fact, it's probably not even valid.
+This is /not/ ready for use yet!
 -->
-<xhtml:html
+<html
+		xmlns="http://www.w3.org/1999/xhtml"
 		xmlns:xf="http://www.w3.org/2002/xforms"
-		xmlns:xhtml="http://www.w3.org/1999/xhtml"
 		xmlns:ev="http://www.w3.org/2001/xml-events"
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:xbug="http://xbug.sourceforge.net/"
 		>
 
-	<xhtml:head>
-		<xhtml:title>xbug</xhtml:title>
-		<xhtml:meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8"/>
-		<xhtml:meta name="version" content="$Id$"/>
+	<head>
+		<title>xbug</title>
+		<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8"/>
+		<meta name="version" content="$Id$"/>
+		<style type="text/css">
+			@namespace xf url(http://www.w3.org/2002/xforms);
+			h3 {
+				margin-top: 2em;
+			}
+			#bugs-repeat p xf|label {
+				display: block;
+			}
+		</style>
 
 		<xf:model id="xbug">
 
@@ -27,67 +36,52 @@ This is /not/ ready for use yet! In fact, it's probably not even valid.
 			<xf:instance id="statuses">
 				<statuses xmlns="">
 					<status>
-						<value/>
-						<description>Undefined</description>
+						<value>Undefined</value>
 					</status>
 					<status>
 						<value>Unconfirmed</value>
-						<description></description>
 					</status>
 					<status>
 						<value>New</value>
-						<description></description>
 					</status>
 					<status>
 						<value>Assigned</value>
-						<description></description>
 					</status>
 					<status>
 						<value>Re-opened</value>
-						<description></description>
 					</status>
 					<status>
 						<value>Resolved</value>
-						<description></description>
 					</status>
 					<status>
 						<value>Verified</value>
-						<description></description>
 					</status>
 				</statuses>
 			</xf:instance>
-			<xf:bind id="statuses-bind" nodeset="instance('statuses')/status" readonly="true()"/>
 
 			<!-- Bug resolutions -->
 			<xf:instance id="resolutions">
 				<resolutions xmlns="">
 					<resolution>
-						<value>N/A</value>
-						<description>Undefined</description>
+						<value>None</value>
 					</resolution>
 					<resolution>
 						<value>Fixed</value>
-						<description></description>
 					</resolution>
 					<resolution>
 						<value>Invalid</value>
-						<description></description>
 					</resolution>
 					<resolution>
 						<value>Won't fix</value>
-						<description></description>
 					</resolution>
 					<resolution>
 						<value>Duplicate</value>
-						<description></description>
 					</resolution>
 					<resolution>
 						<value>Works for me</value>
-						<description></description>
 					</resolution>
 					<resolution>
 						<value>Incomplete</value>
-						<description></description>
 					</resolution>
 				</resolutions>
 			</xf:instance>
@@ -98,7 +92,7 @@ This is /not/ ready for use yet! In fact, it's probably not even valid.
 					<bug id="0">
 						<summary/>
 						<description/>
-						<status/>
+						<status>Undefined</status>
 						<resolution/>
 						<reporter/>
 					</bug>
@@ -127,68 +121,83 @@ This is /not/ ready for use yet! In fact, it's probably not even valid.
 				<!-- TODO: Load first bug into context -->
 			</xf:action>
 		</xf:model>
-	</xhtml:head>
-	<xhtml:body>
+	</head>
+	<body>
 
-		<xhtml:div xml:id="contents">
-		
-			<xhtml:h1>Bugs</xhtml:h1>
+		<div xml:id="contents">
 
-			<xf:group>
-				<xf:label><xhtml:h2>File new bug</xhtml:h2></xf:label>
-	
-				<!-- Bug input -->
-				<xf:input bind="context-bug-summary-bind" accesskey="S">
-					<xf:label>Summary</xf:label>
-	
-					<xf:help>Enter the summary of the bug.</xf:help>
-					<xf:hint>Try to describe in a few words what is wrong.</xf:hint>
-					<xf:alert>Mandatory field.</xf:alert>
-				</xf:input>
-	
-				<!-- When selecting a Job, set the context -->
-				<xf:select1 bind="context-bug-status-bind">
-					<xf:label>Status</xf:label>
-					<xf:itemset bind="statuses-bind">
-						<xf:label ref="value"/>
-						<xf:value ref="value"/>
-					</xf:itemset>
-					<xf:alert>The status does not exist!</xf:alert>
-				</xf:select1>
-	
-				<xf:input id="bug-reporter-input" bind="context-bug-reporter-bind">
-					<xf:label>Reported by</xf:label>
-					<xf:alert>Invalid value.</xf:alert>
-				</xf:input>
-	
+			<xf:group id="bugs">
+				<xf:label><h1>Bugs</h1></xf:label>
+
+				<xf:group id="actions">
+					<xf:submit submission="save-bugs" accesskey="S">
+						<xf:label>Save</xf:label>
+					</xf:submit>
+
+					<xf:trigger>
+						<xf:label>New</xf:label>
+						<xf:insert nodeset="instance('bugsFile')//xbug:bug" at="index('bugs-repeat')" position="after" ev:event="DOMActivate"/>
+					</xf:trigger>
+
+					<xf:trigger>
+						<xf:label>Delete</xf:label>
+						<xf:delete nodeset="instance('bugsFile')//xbug:bug" at="index('bugs-repeat')" ev:event="DOMActivate"/>
+					</xf:trigger>
+
+				</xf:group>
+
+				<xf:repeat id="bugs-repeat" nodeset="instance('bugsFile')//xbug:bug">
+					<h3>
+						<xf:output ref="@xml:id">
+							<xf:label>Bug #</xf:label>
+						</xf:output>
+					</h3>
+					<p>
+						<xf:input ref="xbug:summary">
+							<xf:label>Summary</xf:label>
+							<xf:help>Enter the summary of the bug.</xf:help>
+							<xf:hint>Try to describe in a few words what is wrong.</xf:hint>
+							<xf:alert>Mandatory field.</xf:alert>
+						</xf:input>
+					</p>
+					<p>
+						<xf:textarea ref="xbug:description">
+							<xf:label>Description</xf:label>
+						</xf:textarea>
+					</p>
+					<p>
+						<xf:select1 ref="xbug:status">
+							<xf:label>Status</xf:label>
+							<xf:itemset nodeset="instance('statuses')/status">
+								<xf:label ref="value"/>
+								<xf:value ref="value"/>
+							</xf:itemset>
+							<xf:alert>The status does not exist!</xf:alert>
+						</xf:select1>
+					</p>
+					<p>
+						<xf:select1 ref="xbug:resolution">
+							<xf:label>Resolution</xf:label>
+							<xf:itemset nodeset="instance('resolutions')/resolution">
+								<xf:label ref="value"/>
+								<xf:value ref="value"/>
+							</xf:itemset>
+							<xf:alert>The status does not exist!</xf:alert>
+						</xf:select1>
+					</p>
+					<p>
+						<xf:input ref="xbug:reporter">
+							<xf:label>Reporter</xf:label>
+						</xf:input>
+					</p>
+					</xf:repeat>
 			</xf:group>
-			
-			<xf:group>
-				<xf:label><xhtml:h2>Log</xhtml:h2></xf:label>
-				<xf:repeat nodeset="instance('bugsFile')//xbug:bug">
-					<xf:output ref="xbug:summary">
-						<xf:label><xhtml:h3>Summary</xhtml:h3></xf:label>
-					</xf:output>
-					<xf:output ref="xbug:description">
-						<xf:label><xhtml:p>Description</xhtml:p></xf:label>
-					</xf:output>
-					<xf:output ref="xbug:status">
-						<xf:label>Status</xf:label>
-					</xf:output>
-					<xf:output ref="xbug:resolution">
-						<xf:label>Resolution</xf:label>
-					</xf:output>
-					<xf:output ref="xbug:reporter">
-						<xf:label>Reporter</xf:label>
-					</xf:output>
-				</xf:repeat>
-			</xf:group>
-		</xhtml:div>
+		</div>
 
-		<xhtml:div id="footer">
+		<div id="footer">
 			<p><a href="http://xbug.sourceforge.net/" title="Bug tracking, downloads, updates, etc.">xbug homepage</a></p>
 			<p><a rel="license" href="http://www.gnu.org/licenses/gpl.html">GNU <abbr title="General Public License">GPL</abbr> licensed</a></p>
-		</xhtml:div>
+		</div>
 
-	</xhtml:body>
-</xhtml:html>
+	</body>
+</html>
