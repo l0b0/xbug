@@ -17,11 +17,24 @@ $Id$
 		<meta name="version" content="$Id$"/>
 		<style type="text/css">
 			@namespace xf url(http://www.w3.org/2002/xforms);
+			body {
+				width: 80ex;
+				margin: 0 auto 0 auto;
+			}
+			#contents {
+				width: 100%;
+			}
 			h3 {
 				margin-top: 2em;
 			}
 			#bugs-repeat p xf|label {
 				display: block;
+			}
+			xf|textarea *, xf|input * {
+				width: 100%;
+			}
+			textarea {
+				height: 5em;
 			}
 			:focus {
 				background-color: #FF6;
