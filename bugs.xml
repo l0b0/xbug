@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bugs xmlns="http://xbug.sourceforge.net/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xbug.svn.sourceforge.net/viewvc/xbug/bugs.xsd">
 	<bug xml:id="0">
-		<summary>My first bug</summary>
-		<description>A longer description of the bug</description>
-		<status>Unconfirmed</status>
+		<summary>Make the bug numbers increase when adding bugs</summary>
+		<description>Currently, all bugs are #0.</description>
+		<status>New</status>
 		<resolution>None</resolution>
-		<reporter>me</reporter>
+		<reporter>Victor Engmark</reporter>
+	</bug><bug xml:id="0">
+		<summary>Log view with filtering options</summary>
+		<description>Might be too similar to the table view to make it a separate bug.</description>
+		<status>New</status>
+		<resolution>None</resolution>
+		<reporter>Victor Engmark</reporter>
+	</bug><bug xml:id="0">
+		<summary>Table view with a summary of the bugs</summary>
+		<description>Should show only one line per bug, with nice color codes n'such</description>
+		<status>New</status>
+		<resolution>None</resolution>
+		<reporter>Victor Engmark</reporter>
+	</bug><bug xml:id="0">
+		<summary>Don't copy fields when creating a new bug</summary>
+		<description>Currently, all values are copied from the last bug.</description>
+		<status>New</status>
+		<resolution>None</resolution>
+		<reporter>Victor Engmark</reporter>
+	</bug><bug xml:id="0">
+		<summary>Make a fully usable bug handling system in a single file</summary>
+		<description/>
+		<status>New</status>
+		<resolution>None</resolution>
+		<reporter>Victor Engmark</reporter>
 	</bug>
 </bugs>
