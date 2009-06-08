@@ -10,8 +10,8 @@
 	<bug xml:id="1">
 		<summary>Only copy "Reporter" field value when creating a new bug</summary>
 		<description>Currently, all values are copied from the last bug.</description>
-		<status>New</status>
-		<resolution>None</resolution>
+		<status>Resolved</status>
+		<resolution>Fixed</resolution>
 		<reporter>Victor Engmark</reporter>
 	</bug>
 	<bug xml:id="2">
@@ -108,13 +108,13 @@
 	<bug xml:id="15">
 		<summary>Enable "live" filtering of items</summary>
 		<description>Filters: Status, resolution, reporter (selection list of unique names)</description>
-		<status>New</status>
-		<resolution>None</resolution>
+		<status>Resolved</status>
+		<resolution>Fixed</resolution>
 		<reporter>Victor Engmark</reporter>
 	</bug>
 	<bug xml:id="16">
 		<summary>Avoid the &lt;bug&gt; end and start tags appearing on the same line</summary>
-		<description></description>
+		<description/>
 		<status>New</status>
 		<resolution>None</resolution>
 		<reporter>Victor Engmark</reporter>

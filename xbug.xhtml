@@ -117,6 +117,16 @@ $Id$
 				</context>
 			</xf:instance>
 
+			<xf:instance id="settings">
+				<settings xmlns="">
+					<filters>
+						<statuses>Undefined Unconfirmed New Assigned Re-opened</statuses>
+						<resolutions>None</resolutions>
+						<reporters/>
+					</filters>
+				</settings>
+			</xf:instance>
+
 			<!-- Current bug bindings -->
 			<xf:bind id="context-bug-bind" nodeset="instance('context')/bug/@id" constraint=".=instance('bugsFile')/bugs/bug/@id or .=''"/>
 			<xf:bind id="context-bug-summary-bind" nodeset="instance('context')/bug/summary"/>
@@ -171,7 +181,28 @@ $Id$
 
 				</xf:group>
 
-				<xf:repeat id="bugs-repeat" nodeset="instance('bugsFile')//xbug:bug">
+				<xf:group id="filters">
+					<xf:select ref="instance('settings')/filters/statuses" appearance="full">
+						<xf:label>Show statuses</xf:label>
+						<xf:itemset nodeset="instance('statuses')/status">
+							<xf:label ref="value"/>
+							<xf:value ref="value"/>
+						</xf:itemset>
+					</xf:select>
+
+					<xf:select ref="instance('settings')/filters/resolutions" appearance="full">
+						<xf:label>Show resolutions</xf:label>
+						<xf:itemset nodeset="instance('resolutions')/resolution">
+							<xf:label ref="value"/>
+							<xf:value ref="value"/>
+						</xf:itemset>
+					</xf:select>
+				</xf:group>
+
+				<xf:repeat
+					id="bugs-repeat"
+					nodeset="instance('bugsFile')//xbug:bug[contains(instance('settings')/filters/statuses, xbug:status)][contains(instance('settings')/filters/resolutions, xbug:resolution)]"
+				>
 					<h3>
 						<xf:output ref="@xml:id">
 							<xf:label>Bug #</xf:label>
