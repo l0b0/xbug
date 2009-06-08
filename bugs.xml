@@ -8,7 +8,7 @@
 		<reporter>Victor Engmark</reporter>
 	</bug>
 	<bug xml:id="1">
-		<summary>Don't copy fields when creating a new bug</summary>
+		<summary>Only copy "Reporter" field value when creating a new bug</summary>
 		<description>Currently, all values are copied from the last bug.</description>
 		<status>New</status>
 		<resolution>None</resolution>
@@ -31,15 +31,15 @@
 	<bug xml:id="4">
 		<summary>Make the bug numbers increase when adding bugs</summary>
 		<description>Currently, all bugs are #0.</description>
-		<status>New</status>
-		<resolution>None</resolution>
+		<status>Resolved</status>
+		<resolution>Fixed</resolution>
 		<reporter>Victor Engmark</reporter>
 	</bug>
 	<bug xml:id="5">
 		<summary>Save files to file in the sequence they are created, with the last items at the bottom</summary>
 		<description/>
-		<status>New</status>
-		<resolution>None</resolution>
+		<status>Resolved</status>
+		<resolution>Fixed</resolution>
 		<reporter>Victor Engmark</reporter>
 	</bug>
 	<bug xml:id="6">
@@ -101,6 +101,20 @@
 	<bug xml:id="14">
 		<summary>Convert to plaintext</summary>
 		<description>Should be easy enough with XSLT.</description>
+		<status>New</status>
+		<resolution>None</resolution>
+		<reporter>Victor Engmark</reporter>
+	</bug>
+	<bug xml:id="15">
+		<summary>Enable "live" filtering of items</summary>
+		<description>Filters: Status, resolution, reporter (selection list of unique names)</description>
+		<status>New</status>
+		<resolution>None</resolution>
+		<reporter>Victor Engmark</reporter>
+	</bug>
+	<bug xml:id="16">
+		<summary>Avoid the &lt;bug&gt; end and start tags appearing on the same line</summary>
+		<description></description>
 		<status>New</status>
 		<resolution>None</resolution>
 		<reporter>Victor Engmark</reporter>

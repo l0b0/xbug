@@ -154,7 +154,14 @@ $Id$
 
 					<xf:trigger>
 						<xf:label>New</xf:label>
-						<xf:insert nodeset="instance('bugsFile')//xbug:bug" at="index('bugs-repeat')" position="after" ev:event="DOMActivate"/>
+						<xf:action ev:event="DOMActivate">
+							<xf:insert nodeset="instance('bugsFile')//xbug:bug" at="last()" position="after" ev:event="DOMActivate"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/@xml:id" value="instance('bugsFile')//xbug:bug[last() - 1]/@xml:id + 1"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:summary" value="''"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:description" value="''"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:status" value="instance('statuses')/status[1]/value"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:resolution" value="instance('resolutions')/resolution[1]/value"/>
+						</xf:action>
 					</xf:trigger>
 
 					<xf:trigger>
