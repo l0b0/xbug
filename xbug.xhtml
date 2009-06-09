@@ -17,6 +17,11 @@ $Id$
 		<meta name="version" content="$Id$"/>
 		<style type="text/css">
 			@namespace xf url(http://www.w3.org/2002/xforms);
+			* {
+				/* Avoid browser differences */
+				padding: 0;
+				margin: 0;
+			}
 			body {
 				width: 80ex;
 				margin: 0 auto 0 auto;
@@ -24,17 +29,48 @@ $Id$
 			#contents {
 				width: 100%;
 			}
-			h3 {
-				margin-top: 2em;
+			h1 {
+				margin-top: 0.25em;
+				margin-bottom: 0.25em;
 			}
-			#bugs-repeat p xf|label {
+			#filters {
+				margin-top: 0.5em;
+			}
+			#filters xf|select {
+				float: left;
+				margin-right: 1em;
+			}
+			#actions {
+				clear: both;
+				padding-top: 0.5em;
+			}
+			#actions > * {
+				margin-right: 2em;
+			}
+			h3,
+			#footer {
+				margin-top: 1em;
+			}
+			#bugs-repeat xf|input,
+			#bugs-repeat xf|textarea {
 				display: block;
 			}
-			xf|textarea *, xf|input * {
+			#bugs-repeat xf|input,
+			#bugs-repeat xf|textarea,
+			#bugs-repeat #selectors {
+				margin-top: 0.3em;
+			}
+			#bugs-repeat xf|* xf|label {
+				margin-right: 0.5ex;
+			}
+			xf|textarea textarea, xf|input input {
 				width: 100%;
 			}
-			textarea {
+			xf|textarea textarea {
 				height: 5em;
+			}
+			#reporter input {
+				width: auto;
 			}
 			:focus {
 				background-color: #FF6;
@@ -182,31 +218,6 @@ $Id$
 			<xf:group id="bugs">
 				<xf:label><h1>Bugs</h1></xf:label>
 
-				<xf:group id="actions">
-					<xf:submit submission="save-bugs" accesskey="S">
-						<xf:label>Save</xf:label>
-					</xf:submit>
-
-					<xf:trigger>
-						<xf:label>New</xf:label>
-						<xf:action ev:event="DOMActivate">
-							<xf:insert nodeset="instance('bugsFile')//xbug:bug" at="last()" position="after" ev:event="DOMActivate"/>
-							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/@xml:id" value="instance('bugsFile')//xbug:bug[last() - 1]/@xml:id + 1"/>
-							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:summary" value="''"/>
-							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:description" value="''"/>
-							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:severity" value="instance('severities')/severity[1]/value"/>
-							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:status" value="instance('statuses')/status[1]/value"/>
-							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:resolution" value="instance('resolutions')/resolution[1]/value"/>
-						</xf:action>
-					</xf:trigger>
-
-					<xf:trigger>
-						<xf:label>Delete</xf:label>
-						<xf:delete nodeset="instance('bugsFile')//xbug:bug" at="index('bugs-repeat')" ev:event="DOMActivate"/>
-					</xf:trigger>
-
-				</xf:group>
-
 				<xf:group id="filters">
 					<xf:select ref="instance('settings')/filters/severities" appearance="full">
 						<xf:label>Show severities</xf:label>
@@ -233,6 +244,31 @@ $Id$
 					</xf:select>
 				</xf:group>
 
+				<xf:group id="actions">
+					<xf:submit submission="save-bugs" accesskey="S">
+						<xf:label>Save</xf:label>
+					</xf:submit>
+
+					<xf:trigger>
+						<xf:label>New</xf:label>
+						<xf:action ev:event="DOMActivate">
+							<xf:insert nodeset="instance('bugsFile')//xbug:bug" at="last()" position="after" ev:event="DOMActivate"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/@xml:id" value="instance('bugsFile')//xbug:bug[last() - 1]/@xml:id + 1"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:summary" value="''"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:description" value="''"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:severity" value="instance('severities')/severity[1]/value"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:status" value="instance('statuses')/status[1]/value"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:resolution" value="instance('resolutions')/resolution[1]/value"/>
+						</xf:action>
+					</xf:trigger>
+
+					<xf:trigger>
+						<xf:label>Delete</xf:label>
+						<xf:delete nodeset="instance('bugsFile')//xbug:bug" at="index('bugs-repeat')" ev:event="DOMActivate"/>
+					</xf:trigger>
+
+				</xf:group>
+
 				<xf:repeat
 					id="bugs-repeat"
 					nodeset="instance('bugsFile')//xbug:bug[contains(instance('settings')/filters/severities, xbug:severity)][contains(instance('settings')/filters/statuses, xbug:status)][contains(instance('settings')/filters/resolutions, xbug:resolution)]"
@@ -242,20 +278,16 @@ $Id$
 							<xf:label>Bug #</xf:label>
 						</xf:output>
 					</h3>
-					<p>
-						<xf:input ref="xbug:summary">
-							<xf:label>Summary</xf:label>
-							<xf:help>Enter the summary of the bug.</xf:help>
-							<xf:hint>Try to describe in a few words what is wrong.</xf:hint>
-							<xf:alert>Mandatory field.</xf:alert>
-						</xf:input>
-					</p>
-					<p>
-						<xf:textarea ref="xbug:description">
-							<xf:label>Description</xf:label>
-						</xf:textarea>
-					</p>
-					<p>
+					<xf:input ref="xbug:summary">
+						<xf:label>Summary</xf:label>
+						<xf:help>Enter the summary of the bug.</xf:help>
+						<xf:hint>Try to describe in a few words what is wrong.</xf:hint>
+						<xf:alert>Mandatory field.</xf:alert>
+					</xf:input>
+					<xf:textarea ref="xbug:description">
+						<xf:label>Description</xf:label>
+					</xf:textarea>
+					<div id="selectors">
 						<xf:select1 ref="xbug:severity">
 							<xf:label>Severity</xf:label>
 							<xf:itemset nodeset="instance('severities')/severity">
@@ -264,8 +296,6 @@ $Id$
 							</xf:itemset>
 							<xf:alert>The severity does not exist!</xf:alert>
 						</xf:select1>
-					</p>
-					<p>
 						<xf:select1 ref="xbug:status">
 							<xf:label>Status</xf:label>
 							<xf:itemset nodeset="instance('statuses')/status">
@@ -274,8 +304,6 @@ $Id$
 							</xf:itemset>
 							<xf:alert>The status does not exist!</xf:alert>
 						</xf:select1>
-					</p>
-					<p>
 						<xf:select1 ref="xbug:resolution">
 							<xf:label>Resolution</xf:label>
 							<xf:itemset nodeset="instance('resolutions')/resolution">
@@ -284,13 +312,11 @@ $Id$
 							</xf:itemset>
 							<xf:alert>The resolution does not exist!</xf:alert>
 						</xf:select1>
-					</p>
-					<p>
-						<xf:input ref="xbug:reporter">
-							<xf:label>Reporter</xf:label>
-						</xf:input>
-					</p>
-					</xf:repeat>
+					</div>
+					<xf:input id="reporter" ref="xbug:reporter">
+						<xf:label>Reporter</xf:label>
+					</xf:input>
+				</xf:repeat>
 			</xf:group>
 		</div>
 

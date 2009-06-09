@@ -136,4 +136,20 @@
 		<resolution>None</resolution>
 		<reporter>Victor Engmark</reporter>
 	</bug>
+	<bug xml:id="17">
+		<summary>More compact display</summary>
+		<description>Filters and bug select1s should show up next to each other.</description>
+		<severity>Cosmetic</severity>
+		<status>Resolved</status>
+		<resolution>Fixed</resolution>
+		<reporter>Victor Engmark</reporter>
+	</bug>
+	<bug xml:id="18">
+		<summary>Make the heading editable</summary>
+		<description>"Bugs" is not very useful - It could be the name of the project or something else identifiable by the user.</description>
+		<severity>Functionality</severity>
+		<status>New</status>
+		<resolution>None</resolution>
+		<reporter>Victor Engmark</reporter>
+	</bug>
 </bugs>
