@@ -105,11 +105,34 @@ $Id$
 			</xf:instance>
 			<xf:bind id="resolutions-bind" nodeset="instance('resolutions')/resolutions/resolution" readonly="true()"/>
 
+			<!-- Bug severities -->
+			<xf:instance id="severities">
+				<severities xmlns="">
+					<severity>
+						<value>Undefined</value>
+					</severity>
+					<severity>
+						<value>Cosmetic</value>
+					</severity>
+					<severity>
+						<value>Functionality</value>
+					</severity>
+					<severity>
+						<value>Crash</value>
+					</severity>
+					<severity>
+						<value>Corruption</value>
+					</severity>
+				</severities>
+			</xf:instance>
+			<xf:bind id="severities-bind" nodeset="instance('severities')/severities/severity" readonly="true()"/>
+
 			<xf:instance id="context">
 				<context xmlns="">
 					<bug id="0">
 						<summary/>
 						<description/>
+						<severity>Undefined</severity>
 						<status>Undefined</status>
 						<resolution/>
 						<reporter/>
@@ -120,6 +143,7 @@ $Id$
 			<xf:instance id="settings">
 				<settings xmlns="">
 					<filters>
+						<severities>Undefined Cosmetic Functionality Crash Corruption</severities>
 						<statuses>Undefined Unconfirmed New Assigned Re-opened</statuses>
 						<resolutions>None</resolutions>
 						<reporters/>
@@ -131,6 +155,7 @@ $Id$
 			<xf:bind id="context-bug-bind" nodeset="instance('context')/bug/@id" constraint=".=instance('bugsFile')/bugs/bug/@id or .=''"/>
 			<xf:bind id="context-bug-summary-bind" nodeset="instance('context')/bug/summary"/>
 			<xf:bind id="context-bug-description-bind" nodeset="instance('context')/bug/description"/>
+			<xf:bind id="context-bug-severity-bind" nodeset="instance('context')/bug/severity"/>
 			<xf:bind id="context-bug-status-bind" nodeset="instance('context')/bug/status"/>
 			<xf:bind id="context-bug-resolution-bind" nodeset="instance('context')/bug/resolution"/>
 			<xf:bind id="context-bug-reporter-bind" nodeset="instance('context')/bug/reporter"/>
@@ -169,6 +194,7 @@ $Id$
 							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/@xml:id" value="instance('bugsFile')//xbug:bug[last() - 1]/@xml:id + 1"/>
 							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:summary" value="''"/>
 							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:description" value="''"/>
+							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:severity" value="instance('severities')/severity[1]/value"/>
 							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:status" value="instance('statuses')/status[1]/value"/>
 							<xf:setvalue ref="instance('bugsFile')//xbug:bug[last()]/xbug:resolution" value="instance('resolutions')/resolution[1]/value"/>
 						</xf:action>
@@ -182,6 +208,14 @@ $Id$
 				</xf:group>
 
 				<xf:group id="filters">
+					<xf:select ref="instance('settings')/filters/severities" appearance="full">
+						<xf:label>Show severities</xf:label>
+						<xf:itemset nodeset="instance('severities')/severity">
+							<xf:label ref="value"/>
+							<xf:value ref="value"/>
+						</xf:itemset>
+					</xf:select>
+
 					<xf:select ref="instance('settings')/filters/statuses" appearance="full">
 						<xf:label>Show statuses</xf:label>
 						<xf:itemset nodeset="instance('statuses')/status">
@@ -201,7 +235,7 @@ $Id$
 
 				<xf:repeat
 					id="bugs-repeat"
-					nodeset="instance('bugsFile')//xbug:bug[contains(instance('settings')/filters/statuses, xbug:status)][contains(instance('settings')/filters/resolutions, xbug:resolution)]"
+					nodeset="instance('bugsFile')//xbug:bug[contains(instance('settings')/filters/severities, xbug:severity)][contains(instance('settings')/filters/statuses, xbug:status)][contains(instance('settings')/filters/resolutions, xbug:resolution)]"
 				>
 					<h3>
 						<xf:output ref="@xml:id">
@@ -220,6 +254,16 @@ $Id$
 						<xf:textarea ref="xbug:description">
 							<xf:label>Description</xf:label>
 						</xf:textarea>
+					</p>
+					<p>
+						<xf:select1 ref="xbug:severity">
+							<xf:label>Severity</xf:label>
+							<xf:itemset nodeset="instance('severities')/severity">
+								<xf:label ref="value"/>
+								<xf:value ref="value"/>
+							</xf:itemset>
+							<xf:alert>The severity does not exist!</xf:alert>
+						</xf:select1>
 					</p>
 					<p>
 						<xf:select1 ref="xbug:status">
